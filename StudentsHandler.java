@@ -1,12 +1,12 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author 29ole
- */
+==========================================================================================================================================================================
+    ПРОЕКТ СТУДЕНТА 3 КУРСУ ГРУПИ 6.1211-2пі математичного факультету Запорізького національного університету
+    Проект представлено виключно як виконання практичного завданння екзаменаційної сесії з дисципліни "Мова програмування Java" (Горбенко В.І.)
+    ПРОЕКТ Є ОСОБИСТОЮ ВЛАСНІСТЮ ТА НЕ МОЖЕ ВИКОРИСТОВУВАТИСЬ ДЛЯ ФІНАНСОВИХ ЦІЛЕЙ.
+    Дата останньої зміни 12.12.2023 20:05.
+==========================================================================================================================================================================
+*/
+// Імпорт пакетів
 import java.sql.SQLException;
 import java.lang.ClassNotFoundException;
 import java.sql.DriverManager;
@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 import java.util.Calendar;
-//import java.util.
+//Клас роботи зі студентами
 public class StudentsHandler extends DataHandler {
     private int choice;
     private Scanner sc = new Scanner(System.in, "windows-1251");
@@ -24,6 +24,7 @@ public class StudentsHandler extends DataHandler {
         System.out.print("1 - Загальна інформація про студентів\n2 - Загальна інформація за параметрами\n3 - Вивести загальну звіт про студента\n4 - Додати студента\nОберіть:");
         choice = sc.nextInt();
         switch(choice) {
+                //Поверхневий вивід даних про студентів
             case 1: {
                 //Загальна інформація
                 resultSet = getStudentsData();
@@ -38,6 +39,7 @@ public class StudentsHandler extends DataHandler {
                 }
                 break;
             }
+                //
             case 2: {
                 //Інформація про студентів за параметрами
                 String template="select st.id,p.surname,p.name,p.last_name,st.Specialties_code,p.sex,p.date_of_birth,p.phone_number,st.Hostel_number,p.address,p.email,st.Exceptions_code from students as st INNER JOIN people as p ON p.id = st.People_id ";
@@ -439,9 +441,11 @@ public class StudentsHandler extends DataHandler {
             }
         }
     }
+    //Загальні дані про студентів
     public ResultSet getStudentsData() throws SQLException, ClassNotFoundException {
         return statement.executeQuery("select st.id,p.surname,p.name,p.last_name,st.Specialties_code,p.sex,p.date_of_birth,p.phone_number,st.Hostel_number,p.address,p.email from students as st INNER JOIN people as p ON p.id = st.People_id;");
     }
+    //Дані про студентів за параметрами
     public ResultSet getParametresStudentsData(String request) throws SQLException, ClassNotFoundException {
         return statement.executeQuery(request);
     }
