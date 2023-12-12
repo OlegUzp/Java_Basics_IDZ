@@ -1,3 +1,12 @@
+/*
+==========================================================================================================================================================================
+    ПРОЕКТ СТУДЕНТА 3 КУРСУ ГРУПИ 6.1211-2пі математичного факультету Запорізького національного університету
+    Проект представлено виключно як виконання практичного завданння екзаменаційної сесії з дисципліни "Мова програмування Java" (Горбенко В.І.)
+    ПРОЕКТ Є ОСОБИСТОЮ ВЛАСНІСТЮ ТА НЕ МОЖЕ ВИКОРИСТОВУВАТИСЬ ДЛЯ ФІНАНСОВИХ ЦІЛЕЙ.
+    Дата останньої зміни 12.12.2023 19:57.
+==========================================================================================================================================================================
+*/
+// Імпорт пакетів
 import java.sql.SQLException;
 import java.lang.ClassNotFoundException;
 import java.sql.DriverManager;
@@ -8,16 +17,18 @@ import java.util.Scanner;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
+//Клас для роботи з оцінками студентів у відомостях
 public class MarksHandler extends DataHandler {
     private int choice;
     private Scanner sc = new Scanner(System.in, "windows-1251");
     private ResultSet resultSet;
+    //Операції
     public void operations()  throws SQLException, ClassNotFoundException  {
         System.out.print("1 - Вивести усі оцінки студентів\n2 - Вивести оцінки за параметрами\n3 - Додати оцінку в відомість\n4 - Вивести рейтинг потоку без зазначення стипендії\n5 - Обрахувати стипендіантів та вивести рейтинг\nВибір:");
         choice = sc.nextInt();
         switch(choice) {
+            //Усі оцінки
             case 1: {
-                //Усі оцінки
                 resultSet = getData("SELECT ap.id,p.surname,p.name,p.last_name,sp.code,sp.name,sub.name,sub.StudyType_name,ap.Date_enter_marks,ap.credits,ap.marks FROM academic_performances as ap INNER JOIN students as st ON st.id=ap.Students_id INNER JOIN people as p ON p.id=st.People_ID INNER JOIN subjects as sub ON ap.Subjects_code=sub.code INNER JOIN specialties as sp ON sp.code = st.Specialties_code ORDER BY ap.id ASC;");
                 System.out.printf("| %-5s | %-20s | %-20s | %-20s | %-5s | %-20s | %-50s | %-10s | %-15s | %-7s | %-6s |\n",
                                      "Наказ", "Прізвище", "Ім'я","По-батькові","Спец.","Назва спеціальності","Предмет","Рівень","Дата виставлення","Кредити","Оцінка");
@@ -31,7 +42,7 @@ public class MarksHandler extends DataHandler {
                 break;
             }
             case 2: {
-                //Оцінки за параметрами
+                //Оцінки за параметрами (опціональні)
                 sc.nextLine();
                 String template = "SELECT ap.id,p.surname,p.name,p.last_name,sp.code,sp.name,sub.name,sub.StudyType_name,ap.Date_enter_marks,ap.credits,ap.marks FROM academic_performances as ap INNER JOIN students as st ON st.id=ap.Students_id INNER JOIN people as p ON p.id=st.People_ID INNER JOIN subjects as sub ON ap.Subjects_code=sub.code INNER JOIN specialties as sp ON sp.code = st.Specialties_code ";
                 String value = "";
@@ -421,6 +432,7 @@ public class MarksHandler extends DataHandler {
         
         }
     }
+    //Функція оформлення запитів типу SELECT до бази даних
     private ResultSet getData(String request) throws SQLException, ClassNotFoundException {
         return statement.executeQuery(request);
     }
