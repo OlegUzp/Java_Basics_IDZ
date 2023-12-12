@@ -1,12 +1,12 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author 29ole
- */
+==========================================================================================================================================================================
+    ПРОЕКТ СТУДЕНТА 3 КУРСУ ГРУПИ 6.1211-2пі математичного факультету Запорізького національного університету
+    Проект представлено виключно як виконання практичного завданння екзаменаційної сесії з дисципліни "Мова програмування Java" (Горбенко В.І.)
+    ПРОЕКТ Є ОСОБИСТОЮ ВЛАСНІСТЮ ТА НЕ МОЖЕ ВИКОРИСТОВУВАТИСЬ ДЛЯ ФІНАНСОВИХ ЦІЛЕЙ.
+    Дата останньої зміни 12.12.2023 20:09.
+==========================================================================================================================================================================
+*/
+// Імпорт пакетів
 import java.sql.SQLException;
 import java.lang.ClassNotFoundException;
 import java.sql.DriverManager;
@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 import java.util.Calendar;
-//import java.util.
+//Клас роботи з даними предметів
 public class SubjectsHandler extends DataHandler {
     private int choice;
     private Scanner sc = new Scanner(System.in, "windows-1251");
@@ -36,6 +36,7 @@ public class SubjectsHandler extends DataHandler {
                 break;
             }
             case 2: {
+                //Виведення предметів за параметрами
                 sc.nextLine();
                 System.out.println("Введіть дисципліну: ");
                 String value;
@@ -50,6 +51,7 @@ public class SubjectsHandler extends DataHandler {
                 break;
             }
             case 3: {
+                //Додавання дисципліни
                 sc.nextLine();
                 System.out.println("Введіть назву дисципліни: ");
                 String value;
@@ -77,6 +79,7 @@ public class SubjectsHandler extends DataHandler {
             }
         }
     }
+    //Отримання даних за запитом типу SELECT
     private ResultSet getData(String request) throws SQLException, ClassNotFoundException  {
         return statement.executeQuery(request);
     }
