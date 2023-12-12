@@ -1,9 +1,12 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-
+==========================================================================================================================================================================
+    ПРОЕКТ СТУДЕНТА 3 КУРСУ ГРУПИ 6.1211-2пі математичного факультету Запорізького національного університету
+    Проект представлено виключно як виконання практичного завданння екзаменаційної сесії з дисципліни "Мова програмування Java" (Горбенко В.І.)
+    ПРОЕКТ Є ОСОБИСТОЮ ВЛАСНІСТЮ ТА НЕ МОЖЕ ВИКОРИСТОВУВАТИСЬ ДЛЯ ФІНАНСОВИХ ЦІЛЕЙ.
+    Дата останньої зміни 12.12.2023 19:38.
+==========================================================================================================================================================================
+*/
+// Імпорт пакетів
 import java.sql.SQLException;
 import java.lang.ClassNotFoundException;
 import java.sql.DriverManager;
@@ -12,15 +15,17 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 import java.util.Calendar;
-//import java.util.
+//Клас операцій з пільгами
 public class ExceptionsHandler extends DataHandler {
     private int choice;
     private Scanner sc = new Scanner(System.in, "windows-1251");
     private ResultSet resultSet;
+    //функція операцій з даними
     public void operations()  throws SQLException, ClassNotFoundException  {
         System.out.print("1 - Вивести пільги\n2 - Перевірити на існування пільги за кодом\n3 - Додати пільгу\n4 - Додати або видалити студента з пільги\nВибір:");
         choice = sc.nextInt();
         switch(choice) {
+            // Загальний вивід операцій з пільгами
             case 1: {
                 resultSet = getExceptionsData("select * from exceptions;");
                 System.out.printf("| %-3s | %-100s |\n",
@@ -32,6 +37,7 @@ public class ExceptionsHandler extends DataHandler {
                 }
                 break;
             }
+                //Перевірка існування пільги за кодом
             case 2: {
                 sc.nextLine();
                 String value;
@@ -48,6 +54,7 @@ public class ExceptionsHandler extends DataHandler {
                 }
                 break;
             }
+                //Додавання пільги за кодом, описом, перевірка на існування пільги якщо вона вже створена
             case 3: {
                 sc.nextLine();
                 String value = "";
@@ -68,7 +75,7 @@ public class ExceptionsHandler extends DataHandler {
                     System.out.print("2.Введіть опис: ");
                     value = sc.nextLine();
                     while(value.isEmpty()) {
-                        System.out.print("1.Введіть опис: ");
+                        System.out.print("2.Введіть опис: ");
                         value = sc.nextLine();
                     }
                     insert_template+="'"+value+"');";
@@ -78,10 +85,15 @@ public class ExceptionsHandler extends DataHandler {
                 System.out.println("Така пільга існує!");
                 break;
             }
+            //Додавання або видалення пільги у студента
             case 4: {
+                //Запит на знаходження студента
                 String template = "select st.id from students as st INNER JOIN people as p ON p.id = st.People_ID WHERE ";
+                //Шаблон на оновлення запису
                 String alter_template = "UPDATE students SET `Exceptions_code`=";
+                //Ідентифікатор користувача, код пільги, значення для зберігання результату введенням користувачем
                 String user_id = "",entered_code = "",value = "";
+                //Поля вводу обов'язкові
                 System.out.print("1.Прізвище:");
                 value = sc.next();
                 while(value.isEmpty()) {
@@ -104,7 +116,6 @@ public class ExceptionsHandler extends DataHandler {
                 }
                 template+= " AND p.last_name = '"+value+"';";
                 resultSet = getExceptionsData(template);
-//                int count = 0;
                 while (resultSet.next()) {
                     user_id = resultSet.getString(1);
                     System.out.print("4. Введіть код:");
@@ -126,6 +137,7 @@ public class ExceptionsHandler extends DataHandler {
                     System.out.println("Успішно!");
                     break;
                 }
+                //Якщо щось пішло не так
                 System.out.println("Запис не додано!");
                 break;
             }
@@ -135,6 +147,7 @@ public class ExceptionsHandler extends DataHandler {
             }
         }
     }
+    //Обробка запитів на виведення інформації типу SELECT
     public ResultSet getExceptionsData(String template) throws SQLException, ClassNotFoundException {
         return statement.executeQuery(template);
     }
