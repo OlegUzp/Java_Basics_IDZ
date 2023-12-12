@@ -1,13 +1,12 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author 29ole
- */
-
+==========================================================================================================================================================================
+    ПРОЕКТ СТУДЕНТА 3 КУРСУ ГРУПИ 6.1211-2пі математичного факультету Запорізького національного університету
+    Проект представлено виключно як виконання практичного завданння екзаменаційної сесії з дисципліни "Мова програмування Java" (Горбенко В.І.)
+    ПРОЕКТ Є ОСОБИСТОЮ ВЛАСНІСТЮ ТА НЕ МОЖЕ ВИКОРИСТОВУВАТИСЬ ДЛЯ ФІНАНСОВИХ ЦІЛЕЙ.
+    Дата останньої зміни 12.12.2023 19:44
+==========================================================================================================================================================================
+*/
+// Імпорт пакетів
 import java.sql.SQLException;
 import java.lang.ClassNotFoundException;
 import java.sql.DriverManager;
@@ -16,15 +15,17 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 import java.util.Calendar;
-//import java.util.
+//Клас роботи з операціями стосовно хостелів
 public class HostelsHandler extends DataHandler {
     private int choice;
     private Scanner sc = new Scanner(System.in, "windows-1251");
     private ResultSet resultSet;
+    //Функція операцій стосовно гуртожитків
     public void operations()  throws SQLException, ClassNotFoundException  {
         System.out.print("1 - Вивести гуртожитки\n2 - Перевірити на існування гуртожитки за параметрами\n3 - Додати гуртожиток\n4 - Вивести студентів,які очікують поселення, або вже поселені в певний гуртожиток\nВибір:");
         choice = sc.nextInt();
         switch(choice) {
+                //Виведення загальної інформації про гуртожитки
             case 1: {
                 resultSet = getResponse("SELECT * from hostels where `Number`!='0';");
                 System.out.printf("| %-3s | %-100s | %-10s | %-10s |\n",
@@ -35,6 +36,7 @@ public class HostelsHandler extends DataHandler {
                 }
                 break;
             }
+                //Перевірка гуртожитку за  номером гуртожитку, адресою, телефоном, поштою головного, поля є опціональними
             case 2: {
                 String value,template="SELECT * from hostels ";
                 sc.nextLine();
@@ -88,6 +90,7 @@ public class HostelsHandler extends DataHandler {
                 }
                 break;
             }
+            //Додавання гуртожитку з полями вводу: номер гуртожитку (перевірка також чи існує гуртожиток з таким номером),адреса, телефон, пошта, поля вводу обов'язкові
             case 3: {
                 sc.nextLine();
                 String template_request="";
@@ -135,6 +138,7 @@ public class HostelsHandler extends DataHandler {
                 statement.executeUpdate(template_request);
                 break;
             }
+            //Виведення студентів, які очікують поселення або вже поселені за параметрами
             case 4: {
                 String value,template="SELECT st.id,p.surname,p.name,p.last_name,st.Specialties_code,sp.name,st.Year_accepted,h.Number,h.Address FROM students as st INNER JOIN people as p ON p.id=st.People_ID INNER JOIN hostels as h ON h.Number=st.Hostel_number INNER JOIN specialties as sp ON st.Specialties_code=sp.code ";
                 int choice;
@@ -204,6 +208,7 @@ public class HostelsHandler extends DataHandler {
             }
         }
     }
+    // Функція повернення результату запитів до бази даних типу SELECT
     private ResultSet getResponse(String request) throws SQLException, ClassNotFoundException  {
         return statement.executeQuery(request);
     }
